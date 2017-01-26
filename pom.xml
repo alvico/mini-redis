@@ -7,11 +7,6 @@
   <groupId>miniredis</groupId>
   <artifactId>miniredis</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <configuration>
-    <source>1.8</source>
-    <target>1.8</target>
-    <encoding>UTF-8</encoding>
-  </configuration>
   <dependencies>
     <dependency>
       <groupId>org.slf4j</groupId>

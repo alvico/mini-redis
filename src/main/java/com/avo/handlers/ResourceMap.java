@@ -2,7 +2,6 @@ package com.avo.handlers;
 
 import com.avo.helpers.Status;
 
-
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -20,9 +19,7 @@ public class ResourceMap implements Resource {
     Sets the value if it is not locked
   */
   public Status set(String key, String value) {
-    if (!lock.get()) {
-      lock.set(true);
-
+    if (!lock.getAndSet(true)) {
       resource.put(key, value);
       lock.set(false);
       return Status.UPDATED;
