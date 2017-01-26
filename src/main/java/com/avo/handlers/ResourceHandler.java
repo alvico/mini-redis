@@ -30,9 +30,6 @@ public class ResourceHandler {
   public boolean set(String key, String val) throws Exception {
     Status st = res.set(key, val);
     switch (st) {
-      case LOCKED:
-        handleLocks(key, val);
-        log.info(String.format("Key %s locked", key));
       case UPDATED:
           retry = 0;
           log.info(String.format("Key %s updated with value %s", key, val));
@@ -59,19 +56,6 @@ public class ResourceHandler {
 
   public int size() {
     return res.size();
-  }
-
-  /*
-    This should handle locks, which means, that should wait and retry im a while.
-     Added maximum number of retries before failing for avoiding deadlocks
-  */
-  private void handleLocks(String key, String val) throws Exception {
-    int wait = rand.nextInt(11);
-    if (retry == MAX_RETRIES)
-      throw new ExceptionLocked();
-    retry += 1;
-    TimeUnit.MILLISECONDS.sleep(wait);
-    set(key, val);
   }
 
 }

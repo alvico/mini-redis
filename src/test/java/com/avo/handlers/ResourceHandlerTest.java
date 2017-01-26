@@ -76,7 +76,7 @@ public class ResourceHandlerTest {
   @Test
   public void testRHSetMultithreadedSameKeys() throws Exception {
     rs = new ResourceMap();
-    final String key = "Key";
+    final String key = "aKey";
     final String val1 = "val1";
     final String val2 = "val2";
     int timeout = 10;
@@ -115,7 +115,6 @@ public class ResourceHandlerTest {
 
     while (timeout > 0) {
       if (resH.size() == 1) {
-        assert resH.get(key).equals(val1);
         result = true;
         timeout = 0;
       }

@@ -8,24 +8,15 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class ResourceMap implements Resource {
 
   private ConcurrentHashMap<String, String> resource = null;
-  private AtomicBoolean lock = new AtomicBoolean();
 
   public ResourceMap() {
-    lock.set(false);
     resource = new ConcurrentHashMap<String, String>();
   }
 
-  /*
-    Sets the value if it is not locked
-  */
-  public Status set(String key, String value) {
-    if (!lock.getAndSet(true)) {
-      resource.put(key, value);
-      lock.set(false);
-      return Status.UPDATED;
-    }
-    else
-      return Status.LOCKED;
+
+  public synchronized Status set(String key, String value) {
+    resource.put(key, value);
+    return Status.UPDATED;
   }
 
   public String get(String key) {
